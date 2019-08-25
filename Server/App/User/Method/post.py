@@ -19,10 +19,6 @@ def post():
         _userPw = args['pw']
         _userPw_check = args['pw_check']
 
-        print(_userId)
-        print(_userPw)
-        print(_userPw_check)
-
         return 'POST'
 
     except Exception as e:

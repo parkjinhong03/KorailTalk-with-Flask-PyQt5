@@ -1,5 +1,5 @@
 from flask_restful import Resource
-# from App.User.Method.post import post
+from App.User.Method.post import post
 
 
 class HandleUser(Resource):
@@ -7,4 +7,4 @@ class HandleUser(Resource):
         return 'RESTful API'
 
     def post(self):
-        return 'POST'
+        return post()
