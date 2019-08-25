@@ -1,4 +1,6 @@
 from flask_restful import reqparse
+import pymysql
+from DB.connect import db_connect
 
 def post():
     '''
@@ -19,7 +21,9 @@ def post():
         _userPw = args['pw']
         _userPw_check = args['pw_check']
 
+        db, cursor = db_connect()
+
         return 'POST'
 
-    except Exception as e:
+    except SyntaxError as e:
         return {'error':str(e)}
