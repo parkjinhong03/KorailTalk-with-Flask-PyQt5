@@ -1,4 +1,5 @@
 from flask_restful import reqparse
+from flask_jwt_extended import create_access_token
 import pymysql
 from DB.connect import db_connect
 from DB.User.id_exist import id_exist
@@ -85,7 +86,8 @@ def login():
         if _userPW != cursor.fetchone()[0]:
             return {"message": 'Wrong PW entered.', "code": 411}, 411
         else:
-            return {"message": "Login complete", "code": 200}, 200
+            access_token = create_access_token(identity=_userID)
+            return {"access_token": access_token, "code": 200}, 200
 
     except Exception as e:
         return {"error": str(e)}, 400

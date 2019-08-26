@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 from App.User.Method.post import signup, login
 from App.User.Method.put import put
-from flask import request
 
 
 class HandleUser(Resource):
@@ -19,5 +19,6 @@ class HandleUser(Resource):
         except:
             return {"error": "You don't send [func] data(signup or login)", "code": 400}, 400
 
+    @jwt_required
     def put(self):
         return put()
