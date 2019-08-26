@@ -1,13 +1,13 @@
 import sys
 from PyQt5.QtWidgets import *
-from test_UI import testUI
+from Layout.LoginWindow import LoginWindow
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUI()
-        testUI(self)
+        LoginWindow(self)
 
     def setupUI(self):
         self.setFixedSize(1300, 800)
