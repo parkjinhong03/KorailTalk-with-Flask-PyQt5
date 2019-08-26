@@ -58,4 +58,34 @@ def signup():
 
 
 def login():
-    return  'login'
+    '''
+    id와 pw를 받아서 로그인을 헤주는 POST Method
+    :parameter: id, pw
+    :return: status code
+    200 - 로그인 성공
+    410 - ID 입력 오류
+    411 - PW 입력 오류
+    '''
+    try:
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=str)
+        parser.add_argument('pw', type=str)
+        args = parser.parse_args()
+        _userID = args['id']
+        _userPW = args['pw']
+
+        db, cursor = db_connect()
+
+        if id_exist(db, cursor, _userID) == False:
+            return {"message": "Invalid ID entered.", "code": 410}, 410
+
+        sql = f'SELECT user_pw FROM UserLog WHERE user_id = "{_userID}"'
+        cursor.execute(sql)
+
+        if _userPW != cursor.fetchone()[0]:
+            return {"message": 'Wrong PW entered.', "code": 411}, 411
+        else:
+            return {"message": "Login complete", "code": 200}, 200
+
+    except Exception as e:
+        return {"error": str(e)}, 400

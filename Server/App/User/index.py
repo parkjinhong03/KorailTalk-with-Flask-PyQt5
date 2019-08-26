@@ -16,7 +16,7 @@ class HandleUser(Resource):
             elif args['func'] == 'login':
                 return login()
 
-        except SyntaxError:
+        except:
             return {"error": "You don't send [func] data(signup or login)", "code": 400}, 400
 
     def put(self):
