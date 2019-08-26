@@ -3,9 +3,9 @@ import pymysql
 from DB.connect import db_connect
 from DB.User.id_exist import id_exist
 
-def post():
+def signup():
     '''
-    id와 pw, pw_check을 받아서 회원을 등록시켜주는 Method
+    id와 pw, pw_check을 받아서 회원을 등록시켜주는 POST Method
     :parameter: id, pw, pw_check
     :return: status code
     200 - 성공
@@ -55,3 +55,7 @@ def post():
 
     except SyntaxError as e:
         return {'error':str(e)}
+
+
+def login():
+    return  'login'
