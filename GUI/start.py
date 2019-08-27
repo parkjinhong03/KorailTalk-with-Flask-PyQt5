@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
-from Layout.LoginWindow import LoginWindow
+from Layout.Login.LoginWindow import LoginWindow
 
 
 class MainWindow(QMainWindow):
