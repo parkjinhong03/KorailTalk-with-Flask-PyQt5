@@ -4,6 +4,7 @@ import pymysql
 from DB.connect import db_connect
 from DB.User.id_exist import id_exist
 
+
 def signup():
     '''
     id와 pw, pw_check을 받아서 회원을 등록시켜주는 POST Method

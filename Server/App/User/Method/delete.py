@@ -2,6 +2,7 @@ from flask_jwt_extended import get_jwt_identity
 from DB.connect import db_connect
 from DB.User.id_exist import id_exist
 
+
 def delete():
     '''
     회원 탈퇴를 위한 DELETE Method

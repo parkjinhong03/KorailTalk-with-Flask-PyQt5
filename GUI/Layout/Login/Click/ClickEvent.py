@@ -1,7 +1,6 @@
 from Layout.Login import LoginWindow
 from Layout.Login.Click.ClickFunc import ClickFunc
 from Layout.Login.Clear import Login_Clear
-from Layout.Static import static_layout
 from Layout.Search import SearchWindow
 from PyQt5.QtWidgets import *
 
