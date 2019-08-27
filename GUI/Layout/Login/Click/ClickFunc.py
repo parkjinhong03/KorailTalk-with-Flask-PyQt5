@@ -3,6 +3,7 @@ import json
 from PyQt5.QtWidgets import *
 from Layout.Login import user_token
 
+
 class ClickFunc:
     def Login(self, _userID, _userPW):
         url = "http://10.156.147.138:5000/user"
@@ -23,7 +24,8 @@ class ClickFunc:
         elif status_code == 200:
             res_data = json.loads(res.text)
             user_token.access_token = res_data['access_token']
-            QMessageBox.about(self, 'Complete', 'Login succeeded!')
+
+        return status_code
 
     def Signup(self, _userID, _userPW, _userPWC):
         url = "http://10.156.147.138:5000/user"
@@ -36,4 +38,13 @@ class ClickFunc:
         }
 
         res = requests.post(url=url, data=dict)
-        print(res.text)
+
+        code = res.status_code
+        if code == 410:
+            QMessageBox.about(self, 'Error', 'This ID already exists.')
+        elif code == 411:
+            QMessageBox.about(self, 'Error', 'Please enter your password correctly.')
+        elif code == 200:
+            QMessageBox.about(self, 'Complete', 'Your register has been completed.')
+
+        return code

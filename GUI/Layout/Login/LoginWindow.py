@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from Layout.Static import static_layout
 from Layout.Static.Button_Hover import PushButton
-from Layout.Login.ClickEvent import ClickEvent
+from Layout.Login.Click.ClickEvent import ClickEvent
 
 status = "Login"
 
@@ -71,7 +71,7 @@ def LoginWindow(self):
     self.login_input_id.resize(280, 40)
     self.login_input_id.move(280, 305)
     self.login_input_id.setPlaceholderText('아이디를 입력하세요.')
-    self.login_input_id.setStyleSheet("font: 20px; font-weight: bold;")
+    self.login_input_id.setStyleSheet("font: 20px; font-weight: bold; border: 1px solid #828282; border-radius: 10px;")
 
     self.login_label_pw = QLabel('PW', self)
     self.login_label_pw.resize(90, 50)
@@ -83,12 +83,13 @@ def LoginWindow(self):
     self.login_input_pw.move(280, 405)
     self.login_input_pw.setEchoMode(QLineEdit.Password)
     self.login_input_pw.setPlaceholderText('비밀번호를 입력하세요.')
-    self.login_input_pw.setStyleSheet("font: 20px; font-weight: bold;")
+    self.login_input_pw.setStyleSheet("font: 20px; font-weight: bold; border: 1px solid #828282; border-radius: 10px;")
 
     self.lost_id = QPushButton('비밀번호가 기억이 안나시나요?', self)
     self.lost_id.resize(350, 50)
     self.lost_id.move(180, 530)
     self.lost_id.setStyleSheet("font: 20px; color: blue; font-weight: bold; background-color: white; border: 0px;")
+    self.lost_id.clicked.connect(lambda X: ClickEvent.Lost_Button(self))
 
     # 회원가입 LineEdit & Label
     self.signup_label_id = QLabel('ID', self)
@@ -99,7 +100,7 @@ def LoginWindow(self):
     self.signup_input_id = QLineEdit(self)
     self.signup_input_id.resize(280, 40)
     self.signup_input_id.move(880, 305)
-    self.signup_input_id.setStyleSheet("font: 20px; font-weight: bold;")
+    self.signup_input_id.setStyleSheet("font: 20px; font-weight: bold; border: 1px solid #828282; border-radius: 10px;")
 
     self.signup_label_pw = QLabel('PW', self)
     self.signup_label_pw.resize(90, 50)
@@ -110,7 +111,7 @@ def LoginWindow(self):
     self.signup_input_pw.resize(280, 40)
     self.signup_input_pw.move(880, 405)
     self.signup_input_pw.setEchoMode(QLineEdit.Password)
-    self.signup_input_pw.setStyleSheet("font: 20px; font-weight: bold;")
+    self.signup_input_pw.setStyleSheet("font: 20px; font-weight: bold; border: 1px solid #828282; border-radius: 10px;")
 
     self.signup_label_pwc = QLabel('PWC', self)
     self.signup_label_pwc.resize(100, 50)
@@ -121,7 +122,7 @@ def LoginWindow(self):
     self.signup_input_pwc.resize(280, 40)
     self.signup_input_pwc.move(880, 505)
     self.signup_input_pwc.setEchoMode(QLineEdit.Password)
-    self.signup_input_pwc.setStyleSheet("font: 20px; font-weight: bold;")
+    self.signup_input_pwc.setStyleSheet("font: 20px; font-weight: bold; border: 1px solid #828282; border-radius: 10px;")
 
     self.signup_input_id.setReadOnly(True)
     self.signup_input_pw.setReadOnly(True)
