@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from Layout.Static import static_layout
-from Button_Hover import PushButton
+from Layout.Static.Button_Hover import PushButton
 from Layout.Login.ClickEvent import ClickEvent
 
 status = "Login"
@@ -60,14 +60,6 @@ def LoginWindow(self):
     self.signup_button.set_hovering_style("background-color: #ededed; border-radius: 10px; font: 30px; font-weight: bold; border: 1px solid white")
     self.signup_button.initStyle()
     self.signup_button.clicked.connect(lambda x:ClickEvent.Signup_Button(self))
-
-    # 제출 버튼
-    self.submit_button = PushButton('로그인', self)
-    self.submit_button.set_defualt_style("background-color: #3056ff; border-radius: 10px; font: 30px; font-weight: bold; color: white;")
-    self.submit_button.set_hovering_style("background-color: #133aeb; border-radius: 10px; font: 30px; font-weight: bold; color: white;")
-    self.submit_button.initStyle()
-    self.submit_button.resize(200, 80)
-    self.submit_button.move(550, 670)
 
     # 로그인 LineEdit & Label
     self.login_label_id = QLabel('ID', self)
@@ -134,3 +126,12 @@ def LoginWindow(self):
     self.signup_input_id.setReadOnly(True)
     self.signup_input_pw.setReadOnly(True)
     self.signup_input_pwc.setReadOnly(True)
+
+    # 제출 버튼
+    self.submit_button = PushButton('로그인', self)
+    self.submit_button.set_defualt_style("background-color: #3056ff; border-radius: 10px; font: 30px; font-weight: bold; color: white;")
+    self.submit_button.set_hovering_style("background-color: #133aeb; border-radius: 10px; font: 30px; font-weight: bold; color: white;")
+    self.submit_button.initStyle()
+    self.submit_button.resize(200, 80)
+    self.submit_button.move(550, 670)
+    self.submit_button.clicked.connect(lambda X: ClickEvent.Submit_Button(self))

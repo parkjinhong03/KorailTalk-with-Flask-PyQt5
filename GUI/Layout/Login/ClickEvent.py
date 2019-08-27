@@ -1,3 +1,6 @@
+from Layout.Login import LoginWindow
+from Layout.Login.ClickFunc import ClickFunc
+
 class ClickEvent:
     def Login_Button(self):
         self.login_box.setStyleSheet("background-color: white; border-radius: 10px; border: 1px solid black;")
@@ -30,7 +33,7 @@ class ClickEvent:
         self.signup_input_pwc.setReadOnly(True)
 
         self.submit_button.setText('로그인')
-        status = "Login"
+        LoginWindow.status = "Login"
 
     def Signup_Button(self):
         self.signup_box.setStyleSheet("background-color: white; border-radius: 10px; border: 1px solid black;")
@@ -62,4 +65,17 @@ class ClickEvent:
         self.signup_input_pwc.setReadOnly(False)
 
         self.submit_button.setText('회원가입')
-        status = "Signup"
+        LoginWindow.status = "Signup"
+
+    def Submit_Button(self):
+        if LoginWindow.status == 'Login':
+            _userID = self.login_input_id.text()
+            _userPW = self.login_input_pw.text()
+            ClickFunc.Login(self, _userID, _userPW)
+
+
+        if LoginWindow.status == 'Signup':
+            _userID = self.signup_input_id.text()
+            _userPW = self.signup_input_pw.text()
+            _userPWC = self.signup_input_pwc.text()
+            ClickFunc.Signup(self, _userID, _userPW, _userPWC)
