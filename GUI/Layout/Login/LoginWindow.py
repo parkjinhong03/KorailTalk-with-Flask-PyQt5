@@ -8,13 +8,6 @@ status = "Login"
 
 
 def LoginWindow(self):
-    # 배경화면 설정
-    self.background = QLabel(self)
-    self.background.resize(1300, 800)
-    pixmap_background = QPixmap("img/login_bakcgrond1.PNG")
-    pixmap_background.scaledToHeight(800)
-    self.background.setPixmap(QPixmap(pixmap_background))
-
     # 기본 틀 설정
     static_layout.static(self)
 

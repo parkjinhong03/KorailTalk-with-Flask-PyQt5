@@ -2,6 +2,7 @@ from Layout.Login import LoginWindow
 from Layout.Login.Click.ClickFunc import ClickFunc
 from Layout.Login.Clear import Login_Clear
 from Layout.Static import static_layout
+from Layout.Search import SearchWindow
 from PyQt5.QtWidgets import *
 
 
@@ -38,7 +39,6 @@ class ClickEvent:
 
         self.submit_button.setText('로그인')
         LoginWindow.status = "Login"
-
 
     def Signup_Button(self):
         self.signup_box.setStyleSheet("background-color: white; border-radius: 10px; border: 1px solid black;")
@@ -78,11 +78,8 @@ class ClickEvent:
             _userPW = self.login_input_pw.text()
             code = ClickFunc.Login(self, _userID, _userPW)
             if code == 200:
-                self.clear_LoginWindow = QLabel('', self)
-                self.clear_LoginWindow.resize(1300, 800)
-                self.clear_LoginWindow.setStyleSheet("background-color: white;")
-                self.clear_LoginWindow.show()
-
+                Login_Clear.login_clear(self)
+                SearchWindow.SearchWindow(self)
 
         if LoginWindow.status == 'Signup':
             _userID = self.signup_input_id.text()

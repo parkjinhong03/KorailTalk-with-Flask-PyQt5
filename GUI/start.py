@@ -1,13 +1,14 @@
 import sys
 from PyQt5.QtWidgets import *
-from Layout.Login.LoginWindow import LoginWindow
+from Layout.Login import LoginWindow
+from Layout.Search import SearchWindow
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUI()
-        LoginWindow(self)
+        SearchWindow.SearchWindow(self)
 
     def setupUI(self):
         self.setFixedSize(1300, 800)

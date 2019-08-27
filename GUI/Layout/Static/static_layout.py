@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 
+
 def static(self):
     self.header = QLabel('', self)
     self.header.resize(1300, 100)
