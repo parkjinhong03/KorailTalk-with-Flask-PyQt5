@@ -15,6 +15,13 @@ class ClickEvent:
             MainWindow.end_input_location.setText(location)
         self.close()
 
+    def change_location(self):
+        start = self.start_input_location.text()
+        end = self.end_input_location.text()
+
+        self.end_input_location.setText(start)
+        self.start_input_location.setText(end)
+
 
 class LocationWindow(QMainWindow):
     def __init__(self, status, MainWindow):
@@ -25,7 +32,7 @@ class LocationWindow(QMainWindow):
         self.show()
 
     def setupUI(self):
-        self.setFixedSize(300, 400)
+        self.setFixedSize(300, 390)
         self.setWindowTitle('Choose')
 
         self.btn1 = QPushButton('서울', self)
