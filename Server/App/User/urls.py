@@ -1,8 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
-from App.User.Method.post import signup, login
-from App.User.Method.put import put
-from App.User.Method.delete import delete
+from App.User.View.post import signup, login
+from App.User.View.put import put
+from App.User.View.delete import delete
 
 
 class HandleUser(Resource):

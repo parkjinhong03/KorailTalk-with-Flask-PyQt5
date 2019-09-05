@@ -1,7 +1,7 @@
 from flask_restful import reqparse
 from flask_jwt_extended import create_access_token
 import pymysql
-from DB.connect import db_connect
+from DB.connect import db, cursor
 from DB.User.id_exist import id_exist
 
 
@@ -25,8 +25,6 @@ def signup():
         _userId = args['id']
         _userPw = args['pw']
         _userPw_check = args['pw_check']
-
-        db, cursor = db_connect()
 
 
         sql = '''
@@ -76,7 +74,6 @@ def login():
         _userID = args['id']
         _userPW = args['pw']
 
-        db, cursor = db_connect()
 
         if id_exist(db, cursor, _userID) == False:
             return {"message": "Invalid ID entered.", "code": 410}, 410

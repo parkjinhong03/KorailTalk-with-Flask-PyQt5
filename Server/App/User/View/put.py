@@ -1,7 +1,7 @@
 from flask_restful import reqparse
 from flask_jwt_extended import get_jwt_identity
 import pymysql
-from DB.connect import db_connect
+from DB.connect import db, cursor
 
 
 def put():
@@ -27,8 +27,6 @@ def put():
         return {"message": "pw and pw_check do not match", "code": 411}, 411
 
     current_user = get_jwt_identity()
-
-    db, cursor = db_connect()
 
     sql = f'UPDATE userlog SET user_pw = "{_userPw}"  WHERE user_id = "{current_user}"'
     cursor.execute(sql)

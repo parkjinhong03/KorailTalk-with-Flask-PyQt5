@@ -1,5 +1,5 @@
 from flask_jwt_extended import get_jwt_identity
-from DB.connect import db_connect
+from DB.connect import db, cursor
 from DB.User.id_exist import id_exist
 
 
@@ -16,7 +16,6 @@ def delete():
 
     current_user = get_jwt_identity()
 
-    db, cursor = db_connect()
 
     if id_exist(db, cursor, current_user) == False:
         return {"message": "The account does not exist.", "code": 410}, 410
