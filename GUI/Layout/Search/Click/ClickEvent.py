@@ -1,5 +1,18 @@
 from PyQt5.QtWidgets import *
 
+location_num = {
+    '서울': 1,
+    '광명': 2,
+    '천안아산': 3,
+    '오송': 4,
+    '대전': 5,
+    '김천구미': 6,
+    '동대구': 7,
+    '신경주': 8,
+    '울산': 9,
+    '부산': 10
+}
+
 
 class ClickEvent:
     def start_location(self):
@@ -21,6 +34,35 @@ class ClickEvent:
 
         self.end_input_location.setText(start)
         self.start_input_location.setText(end)
+
+    def search_button(self):
+        import datetime
+        now = datetime.datetime.now()
+
+        if int(self.date_year.currentText()) == int(now.strftime('%Y')):
+            if int(self.date_month.currentText()) < int(now.strftime('%m')):
+                QMessageBox.about(self, 'Message', '시간을 다시 확인해 주세요!')
+                return
+
+            elif int(self.date_month.currentText()) == int(now.strftime('%m')):
+                if int(self.date_day.currentText()) < int(now.strftime('%d')):
+                    QMessageBox.about(self, 'Message', '시간을 다시 확인해 주세요!')
+                    return
+
+        if self.start_input_location.text() == '':
+            QMessageBox.about(self, 'Message', '출발역을 선택해 주세요!')
+            return
+        elif self.end_input_location.text() == '':
+            QMessageBox.about(self, 'Message', '도착역을 선택해 주세요!')
+            return
+
+        if location_num[self.start_input_location.text()] > location_num[self.end_input_location.text()]:
+            QMessageBox.about(self, "Message", "아직 서울 -> 부산 방향밖에 예매가 안되요 ㅜㅜ")
+            return
+
+        elif location_num[self.start_input_location.text()] == location_num[self.end_input_location.text()]:
+            QMessageBox.about(self, "Message", "서로 다른 기차역을 선택해 주세요.")
+            return
 
 
 class LocationWindow(QMainWindow):

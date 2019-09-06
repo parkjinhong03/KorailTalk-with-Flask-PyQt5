@@ -223,6 +223,7 @@ def SearchWindow(self):
     self.search_btn_submit.set_defualt_style('background-color: #357BE3; font: 20px; color: white; font-weight: bold; border: 0px;')
     self.search_btn_submit.set_hovering_style('background-color: #1C5DAE; font: 20px; color: white; font-weight: bold; border: 0px;')
     self.search_btn_submit.initStyle()
+    self.search_btn_submit.clicked.connect(lambda X: ClickEvent.search_button(self))
     self.search_btn_submit.show()
 
 
