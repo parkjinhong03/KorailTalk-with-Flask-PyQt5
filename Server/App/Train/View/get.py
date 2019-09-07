@@ -79,6 +79,16 @@ def get():
 
         specific_dict['start_time'] = time_real_list[0]
         specific_dict['end_time'] = time_real_list[1]
+        date1 = datetime.datetime(int(date[0:4]), int(date[4:6]), int(date[6:8]), specific[2]//100, specific[2]%100, 0)
+        date2 = datetime.datetime(int(date[0:4]), int(date[4:6]), int(date[6:8]), specific[3]//100, specific[3]%100, 0)
+        train_take_time = str(date2-date1)
+
+        if len(train_take_time) < 8:
+            specific_dict['operating_time'] = train_take_time[:4]
+
+        elif len(train_take_time) > 9:
+            specific_dict['operating_time'] = train_take_time[8:12]
+            print(train_take_time)
 
         return_dict[count] = specific_dict
         count += 1
