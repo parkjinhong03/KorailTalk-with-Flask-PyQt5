@@ -12,7 +12,7 @@ def Header_Button(self):
     self.main = QLabel('', self)
     self.main.resize(1300, 1200)
     self.main.move(0, 100)
-    self.main.setStyleSheet("background-color: #bad4db;")
+    self.main.setStyleSheet("background-color: #edf4ff;")
     self.main.show()
 
     self.header_logo_background = QLabel('', self)

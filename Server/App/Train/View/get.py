@@ -88,7 +88,6 @@ def get():
 
         elif len(train_take_time) > 9:
             specific_dict['operating_time'] = train_take_time[8:12]
-            print(train_take_time)
 
         return_dict[count] = specific_dict
         count += 1

@@ -12,10 +12,12 @@ def TrainWindow(self):
 
     train_data = my_request.Request_Train(self)
 
-    for i in range(7):
-        specific_train_data = train_data[str(i+1)]
-        layout_module.CreateTuple(self, i+1, specific_train_data['train_num'], specific_train_data['train_name'], specific_train_data['start_time'],
-                                  specific_train_data['end_time'], train_data['fare']['general'], specific_train_data['operating_time'])
+    try:
+        _ = train_data['1']
+    except:
+        QMessageBox.about(self, 'Message', '조회 결과가 없습니다.')
+
+    layout_module.CreateTable(self, train_data, 1)
 
 
 class layout_module:
@@ -28,6 +30,17 @@ class layout_module:
         6: 'rgb(0, 5, 255)',
         7: 'rgb(100, 0, 255)'
     }
+
+    def CreateTable(self, train_data, page):
+        for i in range(7):
+            try:
+                specific_train_data = train_data[str(i + (page - 1) * 7 + 1)]
+                layout_module.CreateTuple(self, i + 1, specific_train_data['train_num'],
+                                          specific_train_data['train_name'], specific_train_data['start_time'],
+                                          specific_train_data['end_time'], train_data['fare']['general'],
+                                          specific_train_data['operating_time'])
+            except KeyError:
+                break
 
     def CreateTuple(self, locate, train_num, train_name, start_time, end_time, fare, operating_time):
         default_x = 185
