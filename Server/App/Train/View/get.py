@@ -13,6 +13,19 @@ date_dict = {
     "Sunday": '7'
 }
 
+train_korean_name = {
+        'Seoul': '서울',
+        'Gwangmyeong': '광명',
+        'Cheonan_Asan': '천안아산',
+        'Osong': '오송',
+        'Daejeon': '대전',
+        'Gimcheon_Gumi': '김천구미',
+        'Dongdaegu': '동대구',
+        'Singyeongju': '신경주',
+        'Ulsan': '울산',
+        'Busan': '부산'
+    }
+
 
 def get():
     return_dict = {}
@@ -71,8 +84,15 @@ def get():
         count += 1
 
 
-    sql = "SELECT * FROM TrainFare"
+    sql = f'SELECT * FROM TrainFare WHERE Intersection = "{train_korean_name[start]}_{train_korean_name[end]}"'
     cursor.execute(sql)
-    print(cursor.fetchall())
+
+    fare_dict = {}
+    fare_data = cursor.fetchone()
+
+    fare_dict['general'] = fare_data[1]
+    fare_dict['special'] = fare_data[2]
+
+    return_dict['fare'] = fare_dict
 
     return return_dict
