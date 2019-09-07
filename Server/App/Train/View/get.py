@@ -21,14 +21,14 @@ def get():
     reqp = reqparse.RequestParser()
     reqp.add_argument('start', type=str)
     reqp.add_argument('end', type=str)
-    reqp.add_argument('time', type=str)
     reqp.add_argument('date', type=str)
 
     args = reqp.parse_args()
 
+    now = datetime.datetime.now()
     start = args['start']
     end = args['end']
-    time = args['time']
+    time = now.strftime("%H%M")
     date = args['date']
 
     dt = datetime.date(int(date[0:4]), int(date[4:6]), int(date[6:8]))
@@ -40,8 +40,10 @@ def get():
     for specific in train_inform:
         if specific[4] != None and date_dict[dt.strftime("%A")] not in str(specific[4]):
             continue
-        if (specific[2] // 100) * 60 + (specific[2] % 100) < (int(time)//100 * 60 + int(time) % 100):
-            continue
+
+        if date == now.strftime("%Y%m%d"):
+            if (specific[2] // 100) * 60 + (specific[2] % 100) < (int(time)//100 * 60 + int(time) % 100):
+                continue
 
         specific_dict = {}
         specific_dict['train_num'] = specific[0]
@@ -67,5 +69,10 @@ def get():
 
         return_dict[count] = specific_dict
         count += 1
+
+
+    sql = "SELECT * FROM TrainFare"
+    cursor.execute(sql)
+    print(cursor.fetchall())
 
     return return_dict

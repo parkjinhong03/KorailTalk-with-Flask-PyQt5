@@ -6,7 +6,7 @@ from Layout.Login import user_token
 
 class ClickFunc:
     def Login(self, _userID, _userPW):
-        url = "http://10.156.147.138:5000/user"
+        url = "http://127.0.0.1:5000/user"
 
         dic = {
             'func': 'login',
@@ -28,7 +28,7 @@ class ClickFunc:
         return status_code
 
     def Signup(self, _userID, _userPW, _userPWC):
-        url = "http://10.156.147.138:5000/user"
+        url = "http://127.0.0.1:5000/user"
 
         dict = {
             'func': 'signup',

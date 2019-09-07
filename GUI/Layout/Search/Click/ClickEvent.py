@@ -1,4 +1,6 @@
 from PyQt5.QtWidgets import *
+from Layout.Search.Clear.Search_clear import search_clear
+from Layout.Train.TrainWindow import TrainWindow
 
 location_num = {
     '서울': 1,
@@ -12,6 +14,8 @@ location_num = {
     '울산': 9,
     '부산': 10
 }
+
+radio_change_count = 0
 
 
 class ClickEvent:
@@ -34,6 +38,17 @@ class ClickEvent:
 
         self.end_input_location.setText(start)
         self.start_input_location.setText(end)
+
+    def change_radio(self):
+        global radio_change_count
+
+        if radio_change_count % 2 == 0:
+            QMessageBox.about(self, 'Message', '어짜피 KTX 밖에 없음용..')
+            radio_change_count += 1
+            self.radio1.setChecked(True)
+
+        else:
+            radio_change_count += 1
 
     def search_button(self):
         import datetime
@@ -63,6 +78,9 @@ class ClickEvent:
         elif location_num[self.start_input_location.text()] == location_num[self.end_input_location.text()]:
             QMessageBox.about(self, "Message", "서로 다른 기차역을 선택해 주세요.")
             return
+
+        search_clear(self)
+        TrainWindow(self)
 
 
 class LocationWindow(QMainWindow):

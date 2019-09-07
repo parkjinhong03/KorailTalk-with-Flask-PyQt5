@@ -35,6 +35,7 @@ def SearchWindow(self):
     self.end_box.setStyleSheet("background-color: #ECF1F4; border: 5px solid #0095CD;")
     self.end_box.show()
 
+
     self.change_btn_location = PushButton('변경', self)
     self.change_btn_location.resize(80, 100)
     self.change_btn_location.move(805, 448)
@@ -129,30 +130,35 @@ def SearchWindow(self):
     self.radio2.move(440, 190)
     self.radio2.setStyleSheet("color: #0095CD;font-weight: bold;")
     self.radio2.show()
+    self.radio2.toggled.connect(lambda X: ClickEvent.change_radio(self))
 
     self.radio3 = QRadioButton('ITX-청춘', self)
     self.radio3.resize(200, 30)
     self.radio3.move(440, 230)
     self.radio3.setStyleSheet("color: #0095CD;font-weight: bold;")
     self.radio3.show()
+    self.radio3.toggled.connect(lambda X: ClickEvent.change_radio(self))
 
     self.radio4 = QRadioButton('새마을호/ITX-새마을', self)
     self.radio4.resize(200, 30)
     self.radio4.move(630, 190)
     self.radio4.setStyleSheet("color: #0095CD;font-weight: bold;")
     self.radio4.show()
+    self.radio4.toggled.connect(lambda X: ClickEvent.change_radio(self))
 
     self.radio5 = QRadioButton('무궁화호/누리로', self)
     self.radio5.resize(200, 30)
     self.radio5.move(630, 230)
     self.radio5.setStyleSheet("color: #0095CD;font-weight: bold;")
     self.radio5.show()
+    self.radio5.toggled.connect(lambda X: ClickEvent.change_radio(self))
 
     self.radio6 = QRadioButton('통큰열차', self)
     self.radio6.resize(200, 30)
     self.radio6.move(830, 190)
     self.radio6.setStyleSheet("color: #0095CD;font-weight: bold;")
     self.radio6.show()
+    self.radio6.toggled.connect(lambda X: ClickEvent.change_radio(self))
 
     self.Next_Icon_black = QLabel(self)
     self.Next_Icon_black.resize(400, 50)
@@ -167,11 +173,11 @@ def SearchWindow(self):
     from datetime  import datetime
     now = datetime.now()
 
-    self.start_label_start = QLabel('출발일', self)
-    self.start_label_start.move(435, 280)
-    self.start_label_start.resize(100, 50)
-    self.start_label_start.setStyleSheet("font: 20px; font-weight: bold; color: #0095CD;")
-    self.start_label_start.show()
+    self.start_label_date = QLabel('출발일', self)
+    self.start_label_date.move(435, 280)
+    self.start_label_date.resize(100, 50)
+    self.start_label_date.setStyleSheet("font: 20px; font-weight: bold; color: #0095CD;")
+    self.start_label_date.show()
 
     self.date_year = QComboBox(self)
     self.date_year.addItem(str(int(now.year)))
