@@ -11,17 +11,16 @@ import json
 
 def TrainWindow(self):
     Header_Button(self)
-    layout_module.DataTitle(self)
-
     train_data = my_request.Request_Train(self)
-
     try:
         _ = train_data['1']
     except:
         QMessageBox.about(self, 'Message', '조회 결과가 없습니다.')
 
+    layout_module.DataTitle(self)
+
     layout_module.CreateTable(self, train_data, 1)
-    layout_module.CreateBottomButton(self, train_data)
+    layout_module.CreateBottomButton(self, train_data, 1)
 
 
 class layout_module:
@@ -35,7 +34,7 @@ class layout_module:
         7: 'rgb(100, 0, 255)'
     }
 
-    def CreateBottomButton(self, train_data):
+    def CreateBottomButton(self, train_data, page):
         count = 0
         while True:
             try:
@@ -43,13 +42,43 @@ class layout_module:
                 count += 1
             except:
                 break
-        print(count)
-        print(train_data)
-        self.test_btn = QPushButton('asdf', self)
-        self.test_btn.show()
-        self.test_btn.clicked.connect(lambda x: clear_table(self))
-        self.test_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
-        self.test_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, 2))
+
+        if count <= 7:
+            return
+
+        self.before_btn = PushButton('before', self)
+        self.before_btn.resize(100, 35)
+        self.before_btn.move(520, 730)
+        self.before_btn.set_defualt_style(
+            'background-color: #357BE3; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.before_btn.set_hovering_style(
+            'background-color: #1C5DAE; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.before_btn.initStyle()
+        self.before_btn.raise_()
+        self.before_btn.show()
+        self.before_btn.clicked.connect(lambda x: clear_table(self))
+        self.before_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
+        self.before_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page - 1))
+        self.before_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page - 1))
+        self.before_btn.clicked.connect(lambda x: ClickEvent.handle_button(self, page - 1, count // 7 + 1))
+
+        self.next_btn = PushButton('next', self)
+        self.next_btn.move(630, 730)
+        self.next_btn.resize(100, 35)
+        self.next_btn.set_defualt_style(
+            'background-color: #357BE3; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.next_btn.set_hovering_style(
+            'background-color: #1C5DAE; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.next_btn.initStyle()
+        self.next_btn.raise_()
+        self.next_btn.show()
+        self.next_btn.clicked.connect(lambda x: clear_table(self))
+        self.next_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
+        self.next_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page + 1))
+        self.next_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page + 1))
+        self.next_btn.clicked.connect(lambda x: ClickEvent.handle_button(self, page + 1, count // 7 + 1))
+
+        print(page)
 
     def CreateTable(self, train_data, page):
         layout_module.CreateButton(self, train_data, page)

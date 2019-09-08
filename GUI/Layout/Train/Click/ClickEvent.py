@@ -34,3 +34,11 @@ class ClickEvent:
         self.hide_train_list.setStyleSheet('background-color: #edf4ff;')
         self.hide_train_list.show()
         print(date, num, start, end)
+
+    def handle_button(self, page, total_page):
+        if page >= total_page + 1:
+            QMessageBox.about(self, 'Message', '더 이상 이후 정보가 없습니다.')
+            return 1
+        elif page <= 0:
+            QMessageBox.about(self, 'Message', '더 이상 이전 정보가 없습니다.')
+            return 2
