@@ -3,6 +3,7 @@ from PyQt5.Qt import *
 from Layout.Static.Header_Button import Header_Button
 from Layout.Static.Button_Hover import PushButton
 from Layout.Train.Click.ClickEvent import ClickEvent
+from Layout.Train.Clear.train_clear import clear_table
 import requests
 import datetime
 import json
@@ -19,7 +20,8 @@ def TrainWindow(self):
     except:
         QMessageBox.about(self, 'Message', '조회 결과가 없습니다.')
 
-    layout_module.CreateTable(self, train_data, 3)
+    layout_module.CreateTable(self, train_data, 1)
+    layout_module.CreateBottomButton(self, train_data)
 
 
 class layout_module:
@@ -32,6 +34,22 @@ class layout_module:
         6: 'rgb(0, 5, 255)',
         7: 'rgb(100, 0, 255)'
     }
+
+    def CreateBottomButton(self, train_data):
+        count = 0
+        while True:
+            try:
+                _ = train_data[str(count+1)]
+                count += 1
+            except:
+                break
+        print(count)
+        print(train_data)
+        self.test_btn = QPushButton('asdf', self)
+        self.test_btn.show()
+        self.test_btn.clicked.connect(lambda x: clear_table(self))
+        self.test_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
+        self.test_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, 2))
 
     def CreateTable(self, train_data, page):
         layout_module.CreateButton(self, train_data, page)
@@ -73,13 +91,13 @@ class layout_module:
         try:
             date = my_request.Get_Date(self)
             start, end = my_request.KoreanToEnglish(self, '서울', '부산')
-            self.btn1.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 1)]['train_num'], start, end))
-            self.btn2.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 2)]['train_num'], start, end))
-            self.btn3.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 3)]['train_num'], start, end))
-            self.btn4.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 4)]['train_num'], start, end))
-            self.btn5.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 5)]['train_num'], start, end))
-            self.btn6.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 6)]['train_num'], start, end))
-            self.btn7.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 7)]['train_num'], start, end))
+            self.btn1.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 1)]['train_num'], start, end, train_data[str((page-1) * 7 + 1)]['start_time']))
+            self.btn2.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 2)]['train_num'], start, end, train_data[str((page-1) * 7 + 2)]['start_time']))
+            self.btn3.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 3)]['train_num'], start, end, train_data[str((page-1) * 7 + 3)]['start_time']))
+            self.btn4.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 4)]['train_num'], start, end, train_data[str((page-1) * 7 + 4)]['start_time']))
+            self.btn5.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 5)]['train_num'], start, end, train_data[str((page-1) * 7 + 5)]['start_time']))
+            self.btn6.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 6)]['train_num'], start, end, train_data[str((page-1) * 7 + 6)]['start_time']))
+            self.btn7.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 7)]['train_num'], start, end, train_data[str((page-1) * 7 + 7)]['start_time']))
         except:
             pass
 
@@ -153,7 +171,6 @@ class layout_module:
         self.label_OperatingTime_data.setAlignment(Qt.AlignCenter)
         self.label_OperatingTime_data.move(default_x + 820, default_y + (locate - 1) * 70)
         self.label_OperatingTime_data.show()
-
 
     def DataTitle(self):
         default_x = 185
