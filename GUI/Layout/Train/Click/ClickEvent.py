@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from Layout.Train.Clear import train_clear
 
 train_korean_name = {
         'Seoul': '서울',
@@ -28,12 +29,7 @@ class ClickEvent:
         if reply == QMessageBox.No:
             return
 
-        self.hide_train_list = QLabel('', self)
-        self.hide_train_list.resize(1100, 600)
-        self.hide_train_list.move(100, 150)
-        self.hide_train_list.setStyleSheet('background-color: #edf4ff;')
-        self.hide_train_list.show()
-        print(date, num, start, end)
+        train_clear.clear_table(self)
 
     def handle_button(self, page, total_page):
         if page >= total_page + 1:

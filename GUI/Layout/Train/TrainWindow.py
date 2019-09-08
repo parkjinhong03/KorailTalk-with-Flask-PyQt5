@@ -34,7 +34,14 @@ class layout_module:
         7: 'rgb(100, 0, 255)'
     }
 
-    def CreateBottomButton(self, train_data, page):
+    def CreateBottomButton(self, train_data, page, total_page=None):
+        if total_page == None:
+            pass
+        else:
+            if page == 0:
+                page = 1
+            elif page > total_page:
+                page = total_page
         count = 0
         while True:
             try:
@@ -58,8 +65,8 @@ class layout_module:
         self.before_btn.show()
         self.before_btn.clicked.connect(lambda x: clear_table(self))
         self.before_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
-        self.before_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page - 1))
-        self.before_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page - 1))
+        self.before_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page - 1, count // 7 + 1))
+        self.before_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page - 1, count // 7 + 1))
         self.before_btn.clicked.connect(lambda x: ClickEvent.handle_button(self, page - 1, count // 7 + 1))
 
         self.next_btn = PushButton('next', self)
@@ -74,13 +81,21 @@ class layout_module:
         self.next_btn.show()
         self.next_btn.clicked.connect(lambda x: clear_table(self))
         self.next_btn.clicked.connect(lambda x: layout_module.DataTitle(self))
-        self.next_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page + 1))
-        self.next_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page + 1))
+        self.next_btn.clicked.connect(lambda x: layout_module.CreateTable(self, train_data, page + 1, count // 7 + 1))
+        self.next_btn.clicked.connect(lambda x: layout_module.CreateBottomButton(self, train_data, page + 1, count // 7 + 1))
         self.next_btn.clicked.connect(lambda x: ClickEvent.handle_button(self, page + 1, count // 7 + 1))
 
         print(page)
 
-    def CreateTable(self, train_data, page):
+    def CreateTable(self, train_data, page, total_page=None):
+        if total_page == None:
+            pass
+        else:
+            if page == 0:
+                page = 1
+            elif page > total_page:
+                page = total_page
+
         layout_module.CreateButton(self, train_data, page)
         for i in range(7):
             try:
