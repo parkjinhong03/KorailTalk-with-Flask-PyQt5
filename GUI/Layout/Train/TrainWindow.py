@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.Qt import *
 from Layout.Static.Header_Button import Header_Button
+from Layout.Static.Button_Hover import PushButton
+from Layout.Train.Click.ClickEvent import ClickEvent
 import requests
 import datetime
 import json
@@ -17,7 +19,7 @@ def TrainWindow(self):
     except:
         QMessageBox.about(self, 'Message', '조회 결과가 없습니다.')
 
-    layout_module.CreateTable(self, train_data, 1)
+    layout_module.CreateTable(self, train_data, 3)
 
 
 class layout_module:
@@ -32,6 +34,7 @@ class layout_module:
     }
 
     def CreateTable(self, train_data, page):
+        layout_module.CreateButton(self, train_data, page)
         for i in range(7):
             try:
                 specific_train_data = train_data[str(i + (page - 1) * 7 + 1)]
@@ -39,8 +42,46 @@ class layout_module:
                                           specific_train_data['train_name'], specific_train_data['start_time'],
                                           specific_train_data['end_time'], train_data['fare']['general'],
                                           specific_train_data['operating_time'])
+
+                self.button_list[i].raise_()
+                self.button_list[i].show()
             except KeyError:
                 break
+
+    def CreateButton(self, train_data, page):
+
+        self.btn1 = PushButton('', self)
+        self.btn2 = PushButton('', self)
+        self.btn3 = PushButton('', self)
+        self.btn4 = PushButton('', self)
+        self.btn5 = PushButton('', self)
+        self.btn6 = PushButton('', self)
+        self.btn7 = PushButton('', self)
+
+        self.button_list = [self.btn1, self.btn2, self.btn3, self.btn4, self.btn5, self.btn6, self.btn7]
+
+        for i in range(7):
+            self.button_list[i].set_defualt_style('background-color: white; border: 1px solid blue; color: blue;')
+            self.button_list[i].set_hovering_style('background-color: #e3e3e3; border: 1px solid blue; color: blue;')
+            self.button_list[i].initStyle()
+            self.button_list[i].resize(70, 40)
+            self.button_list[i].move(649, 223 + i * 70)
+            self.button_list[i].setText('예매')
+            self.button_list[i].raise_()
+            self.button_list[i].close()
+
+        try:
+            date = my_request.Get_Date(self)
+            start, end = my_request.KoreanToEnglish(self, '서울', '부산')
+            self.btn1.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 1)]['train_num'], start, end))
+            self.btn2.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 2)]['train_num'], start, end))
+            self.btn3.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 3)]['train_num'], start, end))
+            self.btn4.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 4)]['train_num'], start, end))
+            self.btn5.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 5)]['train_num'], start, end))
+            self.btn6.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 6)]['train_num'], start, end))
+            self.btn7.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 7)]['train_num'], start, end))
+        except:
+            pass
 
     def CreateTuple(self, locate, train_num, train_name, start_time, end_time, fare, operating_time):
         default_x = 185
@@ -179,7 +220,7 @@ class layout_module:
 class my_request:
     def Request_Train(self):
         start_train, end_train = my_request.KoreanToEnglish(self, '서울', '부산')  # -> SearchWindow 없이 바로 실행 시 인자 값으로 준 역의 영어 이름이 반환됨
-        date = my_request.Get_Date(self, '20190908')  # -> SearchWindow 없이 바로 실행 시 인자 값으로 준 날짜가 반환됨
+        date = my_request.Get_Date(self)  # -> SearchWindow 없이 바로 실행 시 인자 값으로 준 날짜가 반환됨
 
         url = "http://127.0.0.1:5000/train"
         params = {
