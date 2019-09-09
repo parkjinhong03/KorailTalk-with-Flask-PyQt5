@@ -39,7 +39,11 @@ def post(date):
 
     for i in range(train_to_num[start], train_to_num[end]):
         if seat_data[i+1] == 1:
-            return '여기는 예약이 불가능함용'
+            return '여기는 예약이 불가능함용', 410
+
+    for i in range(9):
+        if seat_data[i+2] == 1:
+            train_status_list[i] = 1
 
     print(seat_data)
 
