@@ -250,7 +250,6 @@ def SearchWindow(self):
     self.train_to_search.initStyle()
     self.train_to_search.clicked.connect(lambda x: clear_table(self))
     self.train_to_search.clicked.connect(lambda x: SearchWindow(self))
-    # self.train_to_search.clicked.connect(lambda x: )
     self.train_to_search.close()
 
 

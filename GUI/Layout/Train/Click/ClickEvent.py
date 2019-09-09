@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from Layout.Train.Clear import train_clear
+from Layout.Reservation.ReservationWindow import ReservationWindow
 
 train_korean_name = {
         'Seoul': '서울',
@@ -30,6 +31,7 @@ class ClickEvent:
             return
 
         train_clear.clear_table(self)
+        ReservationWindow(self, date, num, start, end)
 
     def back_button(self):
         train_clear.clear_table(self)

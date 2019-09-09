@@ -10,8 +10,21 @@ import json
 
 
 def TrainWindow(self):
+    self.reservation_to_train = PushButton('<-', self)
+    self.reservation_to_train.resize(50, 50)
+    self.reservation_to_train.move(50, 25)
+    self.reservation_to_train.set_defualt_style(
+        "border-radius: 5px; border: 1px solid white; background-color: rgb(255, 255, 255, 50); font: 20px; font-weight: bold; color: white;")
+    self.reservation_to_train.set_hovering_style(
+        "border-radius: 5px; border: 1px solid white; background-color: rgba(0, 0, 0, 100); font: 20px; font-weight: bold; color: white;")
+    self.reservation_to_train.initStyle()
+    self.reservation_to_train.clicked.connect(lambda x: clear_table(self)) # -> 예매 페이지 초기화 하는 기능으로 대체해야댐
+    self.reservation_to_train.clicked.connect(lambda x: TrainWindow(self))
+    self.reservation_to_train.close()
+
     Header_Button(self)
     train_data = my_request.Request_Train(self)
+    self.my_information_button.close()
     try:
         _ = train_data['1']
     except:
