@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from Layout.Static.Button_Hover import PushButton
 from Layout.Static import Header_Button
 from Layout.Search.Click.ClickEvent import ClickEvent
+from Layout.Train.Clear.train_clear import clear_table
 
 month_day_dict = {
     '1': 31,
@@ -22,6 +23,13 @@ month_day_dict = {
 
 def SearchWindow(self):
     Header_Button.Header_Button(self)
+
+    try:
+        self.logout_button.raise_()
+        self.logout_button.show()
+        print(1)
+    except:
+        pass
 
     self.start_box = QLabel('', self)
     self.start_box.resize(800, 200)
@@ -231,6 +239,19 @@ def SearchWindow(self):
     self.search_btn_submit.initStyle()
     self.search_btn_submit.clicked.connect(lambda X: ClickEvent.search_button(self))
     self.search_btn_submit.show()
+
+    self.train_to_search = PushButton('<-', self)
+    self.train_to_search.resize(50, 50)
+    self.train_to_search.move(50, 25)
+    self.train_to_search.set_defualt_style(
+        "border-radius: 5px; border: 1px solid white; background-color: rgb(255, 255, 255, 50); font: 20px; font-weight: bold; color: white;")
+    self.train_to_search.set_hovering_style(
+        "border-radius: 5px; border: 1px solid white; background-color: rgba(0, 0, 0, 100); font: 20px; font-weight: bold; color: white;")
+    self.train_to_search.initStyle()
+    self.train_to_search.clicked.connect(lambda x: clear_table(self))
+    self.train_to_search.clicked.connect(lambda x: SearchWindow(self))
+    # self.train_to_search.clicked.connect(lambda x: )
+    self.train_to_search.close()
 
 
 def Set_Combo_Item(self, month):

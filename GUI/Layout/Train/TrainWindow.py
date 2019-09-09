@@ -22,6 +22,12 @@ def TrainWindow(self):
     layout_module.CreateTable(self, train_data, 1)
     layout_module.CreateBottomButton(self, train_data, 1)
 
+    try:
+        self.train_to_search.raise_()
+        self.train_to_search.show()
+    except:
+        pass
+
 
 class layout_module:
     font_color = {
@@ -334,4 +340,4 @@ class my_request:
             return train_english_name[self.start_input_location.text()], train_english_name[self.end_input_location.text()]
 
         except:
-            return train_english_name[start], train_english_name[end]
+            return train_english_name[start], train_english_name[end]\

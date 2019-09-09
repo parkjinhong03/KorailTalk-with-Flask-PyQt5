@@ -31,6 +31,9 @@ class ClickEvent:
 
         train_clear.clear_table(self)
 
+    def back_button(self):
+        train_clear.clear_table(self)
+
     def handle_button(self, page, total_page):
         if page >= total_page + 1:
             QMessageBox.about(self, 'Message', '더 이상 이후 정보가 없습니다.')

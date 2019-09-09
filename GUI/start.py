@@ -10,8 +10,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setupUI()
         # TrainWindow(self)
-        SearchWindow(self)
-        # LoginWindow(self)
+        # SearchWindow(self)
+        LoginWindow(self)
 
     def setupUI(self):
         self.setFixedSize(1300, 800)

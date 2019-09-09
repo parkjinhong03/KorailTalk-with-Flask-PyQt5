@@ -8,6 +8,14 @@ status = "Login"
 
 
 def LoginWindow(self):
+    self.logout_button = PushButton('로그아웃', self)
+    self.logout_button.resize(140, 60)
+    self.logout_button.move(1110, 20)
+    self.logout_button.set_defualt_style("border-radius: 5px; border: 1px solid white; background-color: rgb(255, 255, 255, 50); font: 20px; font-weight: bold; color: white;")
+    self.logout_button.set_hovering_style("border-radius: 5px; border: 1px solid white; background-color: rgba(0, 0, 0, 100); font: 20px; font-weight: bold; color: white;")
+    self.logout_button.initStyle()
+    self.logout_button.close()
+
     Header_Button(self)
     self.main.setStyleSheet('background-color: #bad4db;')
     # 로고 사진
