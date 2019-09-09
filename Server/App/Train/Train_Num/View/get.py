@@ -22,9 +22,10 @@ def get(date):
 
     try:
         cursor.execute(sql)
+
+    except:
         for i in range(40):
             return_dict[str(i + 1)] = '0'
-    except:
-        print('nonono')
+        return return_dict
 
-    return return_dict
+    return '이제 시작이다.'

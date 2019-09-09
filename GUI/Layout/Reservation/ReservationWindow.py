@@ -8,11 +8,12 @@ def ReservationWindow(self, date, num, start, end):
     print(date, num, start, end)
 
     url = f'http://127.0.0.1:5000/train/{date}'
-    params = {
+    data = {
         'train_num': num,
         'start': start,
-        'end': end
+        'end': end,
+        'seat': 10
     }
 
-    res = requests.get(url=url, params=params)
+    res = requests.post(url=url, data=data)
     print(res.text)
