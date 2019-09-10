@@ -3,6 +3,7 @@ from PyQt5.Qt import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore
 
+
 class PushButton(QPushButton):
     default_style = ""
     hovering_style = ""
@@ -10,7 +11,6 @@ class PushButton(QPushButton):
     def __init__(self, *__args):
          super().__init__(*__args)
          self.installEventFilter(self)
-
 
     def eventFilter(self, object, event):
         if event.type() == QtCore.QEvent.HoverEnter:

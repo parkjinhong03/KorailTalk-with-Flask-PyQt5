@@ -9,8 +9,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUI()
-        # TrainWindow(self)
-        SearchWindow(self)
+        TrainWindow(self)
+        # SearchWindow(self)
         # LoginWindow(self)
 
     def setupUI(self):
