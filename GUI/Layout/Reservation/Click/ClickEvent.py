@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 import requests
 from Layout.Reservation.Clear.reservation_clear import resercation_clear
+from Layout.Login import user_token
 
 
 class ClickEvent:
@@ -14,6 +15,11 @@ class ClickEvent:
             return
 
         url = f"http://127.0.0.1:5000/train/{date}"
+        acess_token = user_token.access_token
+
+        headers = {
+            'Authorization': f"Bearer {acess_token}"
+        }
 
         data = {
             'train_num': num,
@@ -22,7 +28,7 @@ class ClickEvent:
             "end": end
         }
 
-        res = requests.post(url=url, data=data)
+        res = requests.post(url=url, data=data, headers=headers)
 
         QMessageBox.about(self, "Message", "테스트 기간 동안에는 돈을 받지 않아요")
 

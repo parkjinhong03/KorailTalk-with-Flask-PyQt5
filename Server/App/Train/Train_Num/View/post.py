@@ -1,5 +1,6 @@
 from flask_restful import reqparse
 from DB.connect import db, cursor
+from flask_jwt_extended import get_jwt_identity
 
 train_to_num = {
         'Seoul': 1,
@@ -17,6 +18,8 @@ train_to_num = {
 
 def post(date):
     return_dict = {}
+    _userID = get_jwt_identity()
+    print(_userID)
 
     req = reqparse.RequestParser()
     req.add_argument('train_num', type=str)
