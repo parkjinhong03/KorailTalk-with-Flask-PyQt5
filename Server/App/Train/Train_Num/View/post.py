@@ -14,6 +14,7 @@ train_to_num = {
         'Busan': 10
     }
 
+
 def post(date):
     return_dict = {}
 

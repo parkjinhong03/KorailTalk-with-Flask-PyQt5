@@ -154,13 +154,13 @@ class layout_module:
         try:
             date = my_request.Get_Date(self)
             start, end = my_request.KoreanToEnglish(self, '서울', '부산')
-            self.btn1.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 1)]['train_num'], start, end, train_data[str((page-1) * 7 + 1)]['start_time']))
-            self.btn2.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 2)]['train_num'], start, end, train_data[str((page-1) * 7 + 2)]['start_time']))
-            self.btn3.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 3)]['train_num'], start, end, train_data[str((page-1) * 7 + 3)]['start_time']))
-            self.btn4.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 4)]['train_num'], start, end, train_data[str((page-1) * 7 + 4)]['start_time']))
-            self.btn5.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 5)]['train_num'], start, end, train_data[str((page-1) * 7 + 5)]['start_time']))
-            self.btn6.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 6)]['train_num'], start, end, train_data[str((page-1) * 7 + 6)]['start_time']))
-            self.btn7.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 7)]['train_num'], start, end, train_data[str((page-1) * 7 + 7)]['start_time']))
+            self.btn1.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 1)]['train_num'], start, end, train_data[str((page-1) * 7 + 1)]['start_time'], TrainWindow))
+            self.btn2.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 2)]['train_num'], start, end, train_data[str((page-1) * 7 + 2)]['start_time'], TrainWindow))
+            self.btn3.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 3)]['train_num'], start, end, train_data[str((page-1) * 7 + 3)]['start_time'], TrainWindow))
+            self.btn4.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 4)]['train_num'], start, end, train_data[str((page-1) * 7 + 4)]['start_time'], TrainWindow))
+            self.btn5.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 5)]['train_num'], start, end, train_data[str((page-1) * 7 + 5)]['start_time'], TrainWindow))
+            self.btn6.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 6)]['train_num'], start, end, train_data[str((page-1) * 7 + 6)]['start_time'], TrainWindow))
+            self.btn7.clicked.connect(lambda x: ClickEvent.reservation_click(self, date, train_data[str((page-1) * 7 + 7)]['train_num'], start, end, train_data[str((page-1) * 7 + 7)]['start_time'], TrainWindow))
         except:
             pass
 

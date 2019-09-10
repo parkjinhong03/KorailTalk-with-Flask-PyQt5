@@ -66,26 +66,22 @@ def login():
     410 - ID 입력 오류
     411 - PW 입력 오류
     '''
-    try:
-        parser = reqparse.RequestParser()
-        parser.add_argument('id', type=str)
-        parser.add_argument('pw', type=str)
-        args = parser.parse_args()
-        _userID = args['id']
-        _userPW = args['pw']
+    parser = reqparse.RequestParser()
+    parser.add_argument('id', type=str)
+    parser.add_argument('pw', type=str)
+    args = parser.parse_args()
+    _userID = args['id']
+    _userPW = args['pw']
 
 
-        if id_exist(db, cursor, _userID) == False:
-            return {"message": "Invalid ID entered.", "code": 410}, 410
+    if id_exist(db, cursor, _userID) == False:
+        return {"message": "Invalid ID entered.", "code": 410}, 410
 
-        sql = f'SELECT user_pw FROM UserLog WHERE user_id = "{_userID}"'
-        cursor.execute(sql)
+    sql = f'SELECT user_pw FROM UserLog WHERE user_id = "{_userID}"'
+    cursor.execute(sql)
 
-        if _userPW != cursor.fetchone()[0]:
-            return {"message": 'Wrong PW entered.', "code": 411}, 411
-        else:
-            access_token = create_access_token(identity=_userID)
-            return {"access_token": access_token, "code": 200}, 200
-
-    except Exception as e:
-        return {"error": str(e)}, 400
+    if _userPW != cursor.fetchone()[0]:
+        return {"message": 'Wrong PW entered.', "code": 411}, 411
+    else:
+        access_token = create_access_token(identity=_userID)
+        return {"access_token": access_token, "code": 200}, 200

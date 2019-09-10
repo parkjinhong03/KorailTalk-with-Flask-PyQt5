@@ -17,7 +17,7 @@ train_korean_name = {
 
 
 class ClickEvent:
-    def reservation_click(self, date, num, start, end, start_time):
+    def reservation_click(self, date, num, start, end, start_time, TrainWindow):
         if len(start_time) == 5:
             hour = start_time[:2]
             minute = start_time[3:5]
@@ -25,13 +25,8 @@ class ClickEvent:
             hour = start_time[:1]
             minute = start_time[2:4]
 
-        reply = QMessageBox.question(self, "Message", f'{date[:4]}년 {date[4:6]}월 {date[6:8]}일 {hour}시 {minute}분에 {train_korean_name[start]}역에서 {train_korean_name[end]}역으로\n출발하는 {num}번 열차를 예매하시겠습니까?',
-                             QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-        if reply == QMessageBox.No:
-            return
-
         train_clear.clear_table(self)
-        ReservationWindow(self, date, num, start, end)
+        ReservationWindow(self, date, num, start, end, TrainWindow)
 
     def back_button(self):
         train_clear.clear_table(self)

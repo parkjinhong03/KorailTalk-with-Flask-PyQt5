@@ -7,7 +7,7 @@ from Layout.Login import user_token
 class ClickFunc:
     def Login(self, _userID, _userPW):
         url = "http://127.0.0.1:5000/user"
-
+        print(_userID, _userPW)
         dic = {
             'func': 'login',
             'id': _userID,
