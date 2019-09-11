@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import *
 from Layout.Train.Clear import train_clear
 from Layout.Reservation.ReservationWindow import ReservationWindow
+from Layout.Login import user_token
+import requests
+import json
 
 train_korean_name = {
         'Seoul': '서울',
@@ -24,6 +27,24 @@ class ClickEvent:
         elif len(start_time) == 4:
             hour = start_time[:1]
             minute = start_time[2:4]
+
+        url = "http://127.0.0.1:5000/user"
+
+        acess_token = user_token.access_token
+        headers = {
+            'Authorization': f"Bearer {acess_token}"
+        }
+
+        res = requests.get(url=url, headers=headers)
+        reservation_data = json.loads(res.text)
+
+        for i in reservation_data:
+            specific_data = reservation_data[i]
+
+            if date == specific_data['date']:
+                if str(num) == specific_data['train_num']:
+                    QMessageBox.about(self, "Message", "해당 열치는 이미 예매 하셨습니다.")
+                    return
 
         train_clear.clear_table(self)
         ReservationWindow(self, date, num, start, end, TrainWindow)
