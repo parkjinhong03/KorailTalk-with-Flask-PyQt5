@@ -45,19 +45,17 @@ def post(date):
         if seat_data[i+1] == 1:
             return '여기는 예약이 불가능함용', 410
 
+    sql = f'INSERT INTO reservation (id, date, train_num, seat, start, end) VALUES("{_userID}", "{str(date)}", "{train_num}", "{str(seat)}", "{start}", "{end}")'
+    cursor.execute(sql)
+
     for i in range(9):
         if seat_data[i+2] == 1:
             train_status_list[i] = 1
-
-    print(seat_data)
 
     sql = f'UPDATE k{date} SET  SeoulToGwangmyeong = {train_status_list[0]}, GwangmyeongToCheonan_Asan  = {train_status_list[1]}, Cheonan_AsanToOsong  = {train_status_list[2]}, ' \
         f'OsongToDaejeon = {train_status_list[3]}, DaejeonToGimcheon_Gumi = {train_status_list[4]}, Gimcheon_GumiToDongdaegu  = {train_status_list[5]}, DongdaeguToSingyeongju  = {train_status_list[6]},' \
         f'SingyeongjuToUlsan = {train_status_list[7]}, UlsanToBusan = {train_status_list[8]} WHERE Train_Num = "{train_num}" AND Seat = "{seat}"'
     cursor.execute(sql)
-
-    print(train_status_list)
-    print(date, train_num, start, end, seat)
 
     return f'{str(date)[:4]}년 {str(date)[4:6]}월 {str(date)[6:8]}일 {train_num}번 기차 {seat}좌석 예매를 성공했습니다.', 200
 
