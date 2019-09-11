@@ -3,9 +3,15 @@ from flask_jwt_extended import jwt_required
 from App.User.View.post import signup, login
 from App.User.View.put import put
 from App.User.View.delete import delete
+from App.User.View.get import get
 
 
 class HandleUser(Resource):
+
+    @jwt_required
+    def get(self):
+        return get()
+
     def post(self):
         try:
             parser = reqparse.RequestParser()
