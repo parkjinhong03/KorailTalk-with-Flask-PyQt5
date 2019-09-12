@@ -43,7 +43,6 @@ def SearchWindow(self):
     self.end_box.setStyleSheet("background-color: #ECF1F4; border: 5px solid #0095CD;")
     self.end_box.show()
 
-
     self.change_btn_location = PushButton('변경', self)
     self.change_btn_location.resize(80, 100)
     self.change_btn_location.move(805, 448)
@@ -251,6 +250,8 @@ def SearchWindow(self):
     self.train_to_search.clicked.connect(lambda x: clear_table(self))
     self.train_to_search.clicked.connect(lambda x: SearchWindow(self))
     self.train_to_search.close()
+
+    self.my_information_button.clicked.connect(lambda x:ClickEvent.click_information_button(self))
 
 
 def Set_Combo_Item(self, month):

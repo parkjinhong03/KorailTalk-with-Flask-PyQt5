@@ -82,6 +82,20 @@ class ClickEvent:
         search_clear(self)
         TrainWindow(self)
 
+    def click_information_button(self):
+        self.information_window = InformationWindow()
+
+
+class InformationWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUI()
+        self.show()
+
+    def setupUI(self):
+        self.setFixedSize(400, 600)
+        self.setWindowTitle('Information')
+
 
 class LocationWindow(QMainWindow):
     def __init__(self, status, MainWindow):
