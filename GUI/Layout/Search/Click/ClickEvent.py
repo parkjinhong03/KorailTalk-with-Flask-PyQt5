@@ -1,6 +1,10 @@
 from PyQt5.QtWidgets import *
 from Layout.Search.Clear.Search_clear import search_clear
 from Layout.Train.TrainWindow import TrainWindow
+from Layout.Login import user_token
+import requests
+import json
+import datetime
 
 location_num = {
     '서울': 1,
@@ -90,11 +94,42 @@ class InformationWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUI()
+        reservation_data = InformationWindow.get_data(self)
+        print(reservation_data)
         self.show()
 
     def setupUI(self):
-        self.setFixedSize(400, 600)
+        self.setFixedSize(400, 660)
         self.setWindowTitle('Information')
+        self.background_label = QLabel('', self)
+        self.background_label.resize(400, 660)
+        self.background_label.setStyleSheet('background-color: white;')
+        self.background_label.show()
+
+    def get_data(self):
+        url = "http://127.0.0.1:5000/user"
+        count =  0
+        return_dict = {}
+
+        access_token = user_token.access_token
+
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+
+        res = requests.get(url=url, headers=headers)
+        reservation_data = json.loads(res.text)
+
+        now = datetime.datetime.now()
+
+        for i in reservation_data:
+            specific_data = reservation_data[i]
+            if int(specific_data['date']) < int(now.strftime('%Y%m%d')):
+                continue
+            count += 1
+            return_dict[count] = specific_data
+
+        return return_dict
 
 
 class LocationWindow(QMainWindow):
