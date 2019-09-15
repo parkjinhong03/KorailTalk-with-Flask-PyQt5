@@ -3,6 +3,7 @@ from PyQt5.Qt import *
 from Layout.Search.Clear.Search_clear import search_clear
 from Layout.Train.TrainWindow import TrainWindow
 from Layout.Login import user_token
+from Layout.Static.Button_Hover import PushButton
 import requests
 import json
 import datetime
@@ -95,8 +96,12 @@ class InformationWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setupUI()
+        result = self.setupUI()
         self.show()
+
+        if result == 1:
+            QMessageBox.about(self, "Message", "예매하신 열차 정보가 없습니다.")
+            self.close()
 
     def setupUI(self):
         self.setFixedSize(400, 660)
@@ -109,7 +114,7 @@ class InformationWindow(QMainWindow):
         reservation_data = self.get_data()
 
         if 1 not in reservation_data:
-            return
+            return 1
 
         count = 0
 
@@ -117,16 +122,48 @@ class InformationWindow(QMainWindow):
             if type(i) == int:
                 count += 1
 
-        self.CreatePage(reservation_data, 0, count // 2 + count % 2)
+        self.CreatePage(reservation_data, 1, count // 2 + count % 2)
+        return 0
+
+    def CreateButton(self, page, reservation_data, total_page):
+        self.before_button = PushButton('before', self)
+        self.before_button.resize(100, 30)
+        self.before_button.move(95, 615)
+        self.before_button.set_defualt_style(
+            'background-color: #357BE3; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.before_button.set_hovering_style(
+            'background-color: #1C5DAE; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.before_button.initStyle()
+        self.before_button.clicked.connect(self.ClearPage)
+        self.before_button.clicked.connect(lambda x: self.CreatePage(reservation_data, page-1, total_page))
+        self.before_button.show()
+
+        self.next_button = PushButton('next', self)
+        self.next_button.resize(100, 30)
+        self.next_button.move(215, 615)
+        self.next_button.set_defualt_style(
+            'background-color: #357BE3; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.next_button.set_hovering_style(
+            'background-color: #1C5DAE; font: 17px; color: white; font-weight: bold; border: 0px;')
+        self.next_button.initStyle()
+        self.next_button.clicked.connect(self.ClearPage)
+        self.next_button.clicked.connect(lambda x: self.CreatePage(reservation_data, page+1, total_page))
+        self.next_button.show()
+
+    def ClearPage(self):
+        self.clear_label = QLabel('', self)
+        self.clear_label.resize(400, 660)
+        self.clear_label.setStyleSheet('background-color: #edf4ff;')
+        self.clear_label.show()
 
     def CreatePage(self, reservation_data, page, total_page):
         if page < 1:
-            QMessageBox.about(self, "Message", "더 이상 이전의 정보가 없습니다.")
+            QMessageBox.about(self, "Message", "더 이상 정보가 없습니다.")
             InformationWindow.CreatePage(self, reservation_data, 1, total_page)
             return
 
         elif page > total_page:
-            QMessageBox.about(self, "Message", "더 이상 이후의 정보가 없습니다.")
+            QMessageBox.about(self, "Message", "더 이상 정보가 없습니다.")
             InformationWindow.CreatePage(self, reservation_data, total_page, total_page)
             return
 
@@ -135,6 +172,8 @@ class InformationWindow(QMainWindow):
             self.CreateTicket(reservation_data[page*2], 1)
         except:
             pass
+
+        self.CreateButton(page, reservation_data, total_page)
 
     def CreateTicket(self, specific_data, sequence):
         print(specific_data)
@@ -180,12 +219,14 @@ class InformationWindow(QMainWindow):
         self.start_time.move(50, 120 + sequence * 300)
         self.start_time.setAlignment(Qt.AlignCenter)
         self.start_time.setStyleSheet('font: 40px;')
+        self.start_time.show()
 
         self.end_time = QLabel(end_time, self)
         self.end_time.resize(150, 70)
         self.end_time.move(200, 120 + sequence * 300)
         self.end_time.setAlignment(Qt.AlignCenter)
         self.end_time.setStyleSheet('font: 40px;')
+        self.end_time.show()
 
         self.arrow = QLabel('→', self)
         self.arrow.move(185, 87 + sequence * 300)
