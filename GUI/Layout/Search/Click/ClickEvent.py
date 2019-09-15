@@ -112,6 +112,7 @@ class InformationWindow(QMainWindow):
             return
 
         self.CreateTicket(reservation_data[1], 0)
+        self.CreateTicket(reservation_data[2], 1)
 
     def CreateTicket(self, specific_data, sequence):
         print(specific_data)
@@ -122,6 +123,7 @@ class InformationWindow(QMainWindow):
         start_time = specific_data['start_time']
         end = InformationWindow.train_korean_name[specific_data['end']]
         end_time = specific_data['end_time']
+        train_type = specific_data['train_type']
 
         d = datetime.date(date // 10000, date % 10000 // 100, date % 100)
 
@@ -140,28 +142,105 @@ class InformationWindow(QMainWindow):
         self.start_station = QLabel(start + '', self)
         self.start_station.resize(100, 100)
         self.start_station.move(75, 50 + sequence * 300)
-        self.start_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
+        self.start_station.setStyleSheet('font: 26px 맑은 고딕; font-weight: bold;')
         self.start_station.setAlignment(Qt.AlignCenter)
         self.start_station.show()
 
         self.end_station = QLabel(end + '', self)
         self.end_station.resize(100, 100)
         self.end_station.move(220, 50 + sequence * 300)
-        self.end_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
+        self.end_station.setStyleSheet('font: 26px 맑은 고딕; font-weight: bold;')
         self.end_station.setAlignment(Qt.AlignCenter)
         self.end_station.show()
 
         self.start_time = QLabel(start_time, self)
         self.start_time.resize(150, 70)
-        self.start_time.move(53, 135 + sequence * 300)
+        self.start_time.move(50, 120 + sequence * 300)
         self.start_time.setAlignment(Qt.AlignCenter)
         self.start_time.setStyleSheet('font: 40px;')
 
         self.end_time = QLabel(end_time, self)
         self.end_time.resize(150, 70)
-        self.end_time.move(200, 135 + sequence * 300)
+        self.end_time.move(200, 120 + sequence * 300)
         self.end_time.setAlignment(Qt.AlignCenter)
         self.end_time.setStyleSheet('font: 40px;')
+
+        self.arrow = QLabel('→', self)
+        self.arrow.move(185, 87 + sequence * 300)
+        self.arrow.setStyleSheet('font: 25px; font-weight: bold;')
+        self.arrow.show()
+
+        self.table_label_1 = QLabel('', self)
+        self.table_label_1.setStyleSheet('background-color: #E7E6E6; border: 1px solid black;')
+        self.table_label_1.move(50, 200 + sequence * 300)
+        self.table_label_1.resize(100, 30)
+        self.table_label_1.show()
+
+        self.table_label_2 = QLabel('', self)
+        self.table_label_2.setStyleSheet('background-color: #E7E6E6; border-top: 1px solid black; border-bottom: 1px solid black;')
+        self.table_label_2.move(150, 200 + sequence * 300)
+        self.table_label_2.resize(100, 30)
+        self.table_label_2.show()
+
+        self.table_label_3 = QLabel('', self)
+        self.table_label_3.setStyleSheet('background-color: #E7E6E6; border: 1px solid black;')
+        self.table_label_3.move(250, 200 + sequence * 300)
+        self.table_label_3.resize(100, 30)
+        self.table_label_3.show()
+
+        self.table_label_4 = QLabel('', self)
+        self.table_label_4.setStyleSheet('background-color: white; border: 1px solid black; border-top: 0px;')
+        self.table_label_4.move(50, 230 + sequence * 300)
+        self.table_label_4.resize(100, 55)
+        self.table_label_4.show()
+
+        self.table_label_5 = QLabel('', self)
+        self.table_label_5.setStyleSheet('background-color: white; border-bottom: 1px solid black;')
+        self.table_label_5.move(150, 230 + sequence * 300)
+        self.table_label_5.resize(100, 55)
+        self.table_label_5.show()
+
+        self.table_label_6 = QLabel('', self)
+        self.table_label_6.setStyleSheet('background-color: white; border: 1px solid black; border-top: 0px;')
+        self.table_label_6.move(250, 230 + sequence * 300)
+        self.table_label_6.resize(100, 55)
+        self.table_label_6.show()
+
+        self.text_label_1 = QLabel('열차 종류', self)
+        self.text_label_1.setStyleSheet('font: 17px 맑은 고딕; font-weight: bold;')
+        self.text_label_1.move(63, 197 + sequence * 300)
+        self.text_label_1.show()
+
+        self.text_label_2 = QLabel('열차 번호', self)
+        self.text_label_2.setStyleSheet('font: 17px 맑은 고딕; font-weight: bold;')
+        self.text_label_2.move(163, 197 + sequence * 300)
+        self.text_label_2.show()
+
+        self.text_label_3 = QLabel('좌석 번호', self)
+        self.text_label_3.setStyleSheet('font: 17px 맑은 고딕; font-weight: bold;')
+        self.text_label_3.move(263, 197 + sequence * 300)
+        self.text_label_3.show()
+
+        self.train_type_label = QLabel(train_type, self)
+
+        if len(self.train_type_label.text()) <= 4:
+           self.train_type_label.setStyleSheet('font: 25px 맑은 고딕;')
+        else:
+            self.train_type_label.setStyleSheet('font: 20px 맑은 고딕;')
+
+        self.train_type_label.move(51, 239 + sequence * 300)
+        self.train_type_label.setAlignment(Qt.AlignCenter)
+        self.train_type_label.show()
+
+        self.train_num_label = QLabel(train_num, self)
+        self.train_num_label.setStyleSheet('font: 30px 맑은 고딕;')
+        self.train_num_label.move(174, 239 + sequence * 300)
+        self.train_num_label.show()
+
+        self.seat_label = QLabel(seat, self)
+        self.seat_label.setStyleSheet('font: 30px 맑은 고딕;')
+        self.seat_label.move(283, 239 + sequence * 300)
+        self.seat_label.show()
 
     def get_data(self):
         url = "http://127.0.0.1:5000/user"
@@ -200,6 +279,7 @@ class InformationWindow(QMainWindow):
                     if int(specific_time_table['train_num']) == int(specific_data['train_num']):
                         specific_data['start_time'] = specific_time_table['start_time']
                         specific_data['end_time'] = specific_time_table['end_time']
+                        specific_data['train_type'] = specific_time_table['train_name']
                         break
                 except:
                     continue
