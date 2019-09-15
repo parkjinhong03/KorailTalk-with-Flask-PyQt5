@@ -96,8 +96,6 @@ class InformationWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUI()
-        reservation_data = self.get_data()
-        self.CreateTicket(reservation_data[1])
         self.show()
 
     def setupUI(self):
@@ -108,40 +106,62 @@ class InformationWindow(QMainWindow):
         self.background_label.setStyleSheet('background-color: #edf4ff;')
         self.background_label.show()
 
-    def CreateTicket(self, specific_data):
+        reservation_data = self.get_data()
+
+        if 1 not in reservation_data:
+            return
+
+        self.CreateTicket(reservation_data[1], 0)
+
+    def CreateTicket(self, specific_data, sequence):
         print(specific_data)
         date = int(specific_data['date'])
         train_num = specific_data['train_num']
         seat = specific_data['seat']
         start = InformationWindow.train_korean_name[specific_data['start']]
+        start_time = specific_data['start_time']
         end = InformationWindow.train_korean_name[specific_data['end']]
+        end_time = specific_data['end_time']
+
         d = datetime.date(date // 10000, date % 10000 // 100, date % 100)
 
         self.label_border = QLabel('', self)
         self.label_border.setStyleSheet('border: 1px solid black; background-color: white;')
         self.label_border.resize(360, 280)
-        self.label_border.move(20, 20)
+        self.label_border.move(20, 20 + sequence * 300)
         self.label_border.show()
 
         self.label_date = QLabel(f'{date // 10000}년 {date % 10000 //100}월 {date % 100}일 ({InformationWindow.korean_date[d.strftime("%A")]})', self)
         self.label_date.resize(300, 50)
-        self.label_date.move(35, 25)
+        self.label_date.move(35, 25 + sequence * 300)
         self.label_date.setStyleSheet('font: 22px 맑은 고딕;')
         self.label_date.show()
 
         self.start_station = QLabel(start + '', self)
         self.start_station.resize(100, 100)
-        self.start_station.move(75, 50)
+        self.start_station.move(75, 50 + sequence * 300)
         self.start_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
         self.start_station.setAlignment(Qt.AlignCenter)
         self.start_station.show()
 
         self.end_station = QLabel(end + '', self)
         self.end_station.resize(100, 100)
-        self.end_station.move(220, 50)
+        self.end_station.move(220, 50 + sequence * 300)
         self.end_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
         self.end_station.setAlignment(Qt.AlignCenter)
         self.end_station.show()
+
+        self.start_time = QLabel(start_time, self)
+        self.start_time.resize(150, 70)
+        self.start_time.move(53, 135 + sequence * 300)
+        self.start_time.setAlignment(Qt.AlignCenter)
+        self.start_time.setStyleSheet('font: 40px;')
+
+        self.end_time = QLabel(end_time, self)
+        self.end_time.resize(150, 70)
+        self.end_time.move(200, 135 + sequence * 300)
+        self.end_time.setAlignment(Qt.AlignCenter)
+        self.end_time.setStyleSheet('font: 40px;')
 
     def get_data(self):
         url = "http://127.0.0.1:5000/user"
