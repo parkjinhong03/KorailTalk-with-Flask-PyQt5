@@ -111,8 +111,30 @@ class InformationWindow(QMainWindow):
         if 1 not in reservation_data:
             return
 
-        self.CreateTicket(reservation_data[1], 0)
-        self.CreateTicket(reservation_data[2], 1)
+        count = 0
+
+        for i in reservation_data:
+            if type(i) == int:
+                count += 1
+
+        self.CreatePage(reservation_data, 0, count // 2 + count % 2)
+
+    def CreatePage(self, reservation_data, page, total_page):
+        if page < 1:
+            QMessageBox.about(self, "Message", "더 이상 이전의 정보가 없습니다.")
+            InformationWindow.CreatePage(self, reservation_data, 1, total_page)
+            return
+
+        elif page > total_page:
+            QMessageBox.about(self, "Message", "더 이상 이후의 정보가 없습니다.")
+            InformationWindow.CreatePage(self, reservation_data, total_page, total_page)
+            return
+
+        try:
+            self.CreateTicket(reservation_data[page*2-1], 0)
+            self.CreateTicket(reservation_data[page*2], 1)
+        except:
+            pass
 
     def CreateTicket(self, specific_data, sequence):
         print(specific_data)
