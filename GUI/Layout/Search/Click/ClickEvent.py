@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5.Qt import *
 from Layout.Search.Clear.Search_clear import search_clear
 from Layout.Train.TrainWindow import TrainWindow
 from Layout.Login import user_token
@@ -91,11 +92,12 @@ class ClickEvent:
 
 
 class InformationWindow(QMainWindow):
+
     def __init__(self):
         super().__init__()
         self.setupUI()
-        reservation_data = InformationWindow.get_data(self)
-        print(reservation_data)
+        reservation_data = self.get_data()
+        self.CreateTicket(reservation_data[1])
         self.show()
 
     def setupUI(self):
@@ -103,12 +105,47 @@ class InformationWindow(QMainWindow):
         self.setWindowTitle('Information')
         self.background_label = QLabel('', self)
         self.background_label.resize(400, 660)
-        self.background_label.setStyleSheet('background-color: white;')
+        self.background_label.setStyleSheet('background-color: #edf4ff;')
         self.background_label.show()
+
+    def CreateTicket(self, specific_data):
+        print(specific_data)
+        date = int(specific_data['date'])
+        train_num = specific_data['train_num']
+        seat = specific_data['seat']
+        start = InformationWindow.train_korean_name[specific_data['start']]
+        end = InformationWindow.train_korean_name[specific_data['end']]
+        d = datetime.date(date // 10000, date % 10000 // 100, date % 100)
+
+        self.label_border = QLabel('', self)
+        self.label_border.setStyleSheet('border: 1px solid black; background-color: white;')
+        self.label_border.resize(360, 280)
+        self.label_border.move(20, 20)
+        self.label_border.show()
+
+        self.label_date = QLabel(f'{date // 10000}년 {date % 10000 //100}월 {date % 100}일 ({InformationWindow.korean_date[d.strftime("%A")]})', self)
+        self.label_date.resize(300, 50)
+        self.label_date.move(35, 25)
+        self.label_date.setStyleSheet('font: 22px 맑은 고딕;')
+        self.label_date.show()
+
+        self.start_station = QLabel(start + '', self)
+        self.start_station.resize(100, 100)
+        self.start_station.move(75, 50)
+        self.start_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
+        self.start_station.setAlignment(Qt.AlignCenter)
+        self.start_station.show()
+
+        self.end_station = QLabel(end + '', self)
+        self.end_station.resize(100, 100)
+        self.end_station.move(220, 50)
+        self.end_station.setStyleSheet('font: 22px 맑은 고딕; font-weight: bold;')
+        self.end_station.setAlignment(Qt.AlignCenter)
+        self.end_station.show()
 
     def get_data(self):
         url = "http://127.0.0.1:5000/user"
-        count =  0
+        count = 0
         return_dict = {}
 
         access_token = user_token.access_token
@@ -127,9 +164,52 @@ class InformationWindow(QMainWindow):
             if int(specific_data['date']) < int(now.strftime('%Y%m%d')):
                 continue
             count += 1
+
+            url = 'http://127.0.0.1:5000/train'
+            params = {
+                'start': specific_data['start'],
+                'end': specific_data['end'],
+                'date': specific_data['date']
+            }
+            res = requests.get(url=url, params=params)
+            time_table = json.loads(res.text)
+
+            for j in time_table:
+                specific_time_table = time_table[j]
+                try:
+                    if int(specific_time_table['train_num']) == int(specific_data['train_num']):
+                        specific_data['start_time'] = specific_time_table['start_time']
+                        specific_data['end_time'] = specific_time_table['end_time']
+                        break
+                except:
+                    continue
+
             return_dict[count] = specific_data
 
         return return_dict
+
+    korean_date = {
+        'Monday': '월',
+        'Tuesday': '화',
+        'Wednesday': '수',
+        'Thursday': '목',
+        'Friday': '금',
+        'Saturday': '토',
+        'Sunday': '일'
+    }
+
+    train_korean_name = {
+        'Seoul': '서울',
+        'Gwangmyeong': '광명',
+        'Cheonan_Asan': '천안아산',
+        'Osong': '오송',
+        'Daejeon': '대전',
+        'Gimcheon_Gumi': '김천구미',
+        'Dongdaegu': '동대구',
+        'Singyeongju': '신경주',
+        'Ulsan': '울산',
+        'Busan': '부산'
+    }
 
 
 class LocationWindow(QMainWindow):
