@@ -176,7 +176,6 @@ class InformationWindow(QMainWindow):
         self.CreateButton(page, reservation_data, total_page)
 
     def CreateTicket(self, specific_data, sequence):
-        print(specific_data)
         date = int(specific_data['date'])
         train_num = specific_data['train_num']
         seat = specific_data['seat']
